@@ -11,20 +11,20 @@ app.use(
   })
 );
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.json({ info: 'Node, Express, Postgres API' });
 });
 
 //start server
 app.listen(port, () => {
-  console.log(`Server listening`);
+  console.log(`Server listening on port ${port}`);
 });
 
 //for each endpoint, set HTTP request method, endpoint URL path, and relevant function
-app.get('/todos', db.getTodos);
-app.get('/todos/:id', db.getTodoById);
-app.post('/todos', db.createTodo);
+app.get('/api/todos', db.getTodos);
+app.get('/api/todos/:id', db.getTodoById);
+app.post('/api/todos', db.createTodo);
 
-app.get('/express_backend', (req, res) => {
-  res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
+app.get('/api/express_backend', (req, res) => {
+  res.send({ message: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
 });

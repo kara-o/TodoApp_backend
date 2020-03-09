@@ -21,7 +21,7 @@ const getTodos = (req, res) => {
 };
 
 const getTodoById = (req, res) => {
-  const id = parseInt(request.params.id);
+  const id = parseInt(req.params.id);
 
   pool.query('SELECT * FROM todos WHERE id = $1', [id], (error, results) => {
     if (error) {
@@ -32,16 +32,17 @@ const getTodoById = (req, res) => {
 };
 
 const createTodo = (req, res) => {
-  const { text } = request.body;
+  const { text } = req.body.text;
 
   pool.query(
     'INSERT INTO todos (text) VALUES ($1)',
     [text],
-    (error, results) => {
+    (error, result) => {
+      console.log(error, result);
       if (error) {
         throw error;
       }
-      res.status(201).send(`User added with ID: ${result.insertId}`);
+      res.status(201).json({ id: result.insertId });
     }
   );
 };
