@@ -32,17 +32,16 @@ const getTodoById = (req, res) => {
 };
 
 const createTodo = (req, res) => {
-  const { text } = req.body.text;
+  const { text } = req.body;
 
   pool.query(
     'INSERT INTO todos (text) VALUES ($1)',
     [text],
     (error, result) => {
-      console.log(error, result);
       if (error) {
         throw error;
       }
-      res.status(201).json({ id: result.insertId });
+      res.status(201).json(`Successfully created todo with text '${text}'`);
     }
   );
 };
