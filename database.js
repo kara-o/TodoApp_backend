@@ -35,13 +35,13 @@ const createTodo = (req, res) => {
   const { text } = req.body;
 
   pool.query(
-    'INSERT INTO todos (text) VALUES ($1)',
+    'INSERT INTO todos (text) VALUES ($1) RETURNING id',
     [text],
     (error, result) => {
       if (error) {
         throw error;
       }
-      res.status(201).json(`Successfully created todo with text '${text}'`);
+      res.status(201).json({ id: result.rows[0].id });
     }
   );
 };
