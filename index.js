@@ -24,6 +24,7 @@ app.listen(port, () => {
 app.get('/api/todos', db.getTodos);
 app.get('/api/todos/:id', db.getTodoById);
 app.post('/api/todos', db.createTodo);
+app.patch('/api/todos/:id/toggle', db.toggleTodo);
 
 app.get('/api/express_backend', (req, res) => {
   res.send({ message: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
