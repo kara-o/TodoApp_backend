@@ -46,8 +46,26 @@ const createTodo = (req, res) => {
   );
 };
 
+const toggleTodo = (req, res) => {
+  const completed = req.body.completed;
+  const id = req.params.id;
+  pool.query(
+    'UPDATE todos SET completed = $1 WHERE id = $2',
+    [completed, id],
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
+      res.status(201).json({
+        message: `Successfully toggled complete status of todo with id ${id} to ${completed}`
+      });
+    }
+  );
+};
+
 module.exports = {
   getTodos,
   getTodoById,
-  createTodo
+  createTodo,
+  toggleTodo
 };
