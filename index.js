@@ -21,11 +21,14 @@ app.listen(port, () => {
 });
 
 //for each endpoint, set HTTP request method, endpoint URL path, and relevant function
+
+//TODOS
 app.get('/api/todos', db.getTodos);
 app.get('/api/todos/:id', db.getTodoById);
 app.post('/api/todos', db.createTodo);
 app.patch('/api/todos/:id/toggle', db.toggleTodo);
 
-app.get('/api/express_backend', (req, res) => {
-  res.send({ message: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
-});
+//USERS
+app.get('/api/users', db.getUsers);
+app.get('/api/users/:id', db.getUserById);
+app.post('/api/users', db.createUser);
