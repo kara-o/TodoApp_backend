@@ -24,7 +24,7 @@ const createUser = (req, res) => {
   const { username, email } = req.body;
 
   db.pool.query(
-    'INSERT INTO todos (username, email) VALUES ($1, $2) RETURNING id',
+    'INSERT INTO users (username, email) VALUES ($1, $2) RETURNING id',
     [username, email],
     (error, result) => {
       if (error) {
@@ -39,4 +39,4 @@ module.exports = {
   getUsers,
   getUserById,
   createUser
-}
+};
