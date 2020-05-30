@@ -22,10 +22,11 @@ const getTodoById = (req, res) => {
 
 const createTodo = (req, res) => {
   const { text } = req.body;
+  const createdOn = new Date()
 
   db.pool.query(
-    'INSERT INTO todos (text) VALUES ($1) RETURNING id',
-    [text],
+    'INSERT INTO todos (text, created_on) VALUES ($1, $2) RETURNING id',
+    [text, createdOn],
     (error, result) => {
       if (error) {
         throw error;

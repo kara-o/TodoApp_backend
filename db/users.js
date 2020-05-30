@@ -22,10 +22,12 @@ const getUserById = (req, res) => {
 
 const createUser = (req, res) => {
   const { username, email } = req.body;
+  const createdOn = new Date()
+  console.log('DATE: ', createdOn)
 
   db.pool.query(
-    'INSERT INTO users (username, email) VALUES ($1, $2) RETURNING id',
-    [username, email],
+    'INSERT INTO users (username, email, created_on) VALUES ($1, $2, $3) RETURNING id',
+    [username, email, createdOn],
     (error, result) => {
       if (error) {
         throw error;
