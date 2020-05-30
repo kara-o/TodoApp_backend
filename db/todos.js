@@ -52,9 +52,26 @@ const toggleTodo = (req, res) => {
   );
 };
 
+const deleteTodo = (req, res) => {
+  const id = req.params.id
+  db.pool.query(
+    'DELETE FROM todos WHERE id = $1',
+    [id],
+    (error, result) => {
+      if (error) {
+        throw error
+      }
+      res.status(201).json({
+        message: `Successfully deleted todo with ${id}`
+      })
+    }
+  )
+}
+
 module.exports = {
   getTodos,
   getTodoById,
   createTodo,
-  toggleTodo
+  toggleTodo,
+  deleteTodo
 };

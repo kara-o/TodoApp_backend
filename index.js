@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 5000;
-const { getTodos, getTodoById, createTodo, toggleTodo } = require('./db/todos');
+const { getTodos, getTodoById, createTodo, toggleTodo, deleteTodo } = require('./db/todos');
 const { getUsers, getUserById, createUser } = require('./db/users');
 
 app.use(bodyParser.json());
@@ -24,6 +24,7 @@ app.get('/api/todos', getTodos);
 app.get('/api/todos/:id', getTodoById);
 app.post('/api/todos', createTodo);
 app.patch('/api/todos/:id/toggle', toggleTodo);
+app.delete('/api/todos/:id', deleteTodo)
 
 //USERS
 app.get('/api/users', getUsers);
