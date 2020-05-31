@@ -40,13 +40,13 @@ const loginUser = (req, res) => {
   const { username, email } = req.body;
 
   db.pool.query(
-    "SELECT * FROM todos INNER JOIN users ON users.id IN (SELECT id FROM users WHERE username = $1 AND email = $2) = todos.user_id",
+    "SELECT * FROM users WHERE username = $1 AND email = $2",
     [username, email],
     (error, result) => {
       if (error) {
         throw error;
       }
-      res.status(201).json(result.rows);
+      res.status(201).json(result.rows[0]);
     }
   );
 };

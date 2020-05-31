@@ -1,6 +1,7 @@
 const db = require("./config");
 
 const getTodos = (req, res) => {
+  const { user_id } = req.query;
   db.pool.query(
     "SELECT * FROM todos WHERE user_id = $1 ORDER BY id ASC",
     [user_id],
@@ -8,6 +9,7 @@ const getTodos = (req, res) => {
       if (error) {
         throw error;
       }
+      console.log("RESULT ROWS: ", result.rows);
       res.status(200).json(results.rows);
     }
   );
