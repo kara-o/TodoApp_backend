@@ -9,7 +9,7 @@ const getTodos = (req, res) => {
       if (error) {
         throw error;
       }
-      console.log("RESULT ROWS: ", result.rows);
+      console.log("RESULT ROWS: ", results.rows);
       res.status(200).json(results.rows);
     }
   );
@@ -27,12 +27,12 @@ const getTodoById = (req, res) => {
 };
 
 const createTodo = (req, res) => {
-  const { text } = req.body;
+  const { text, userId } = req.body;
   const createdOn = new Date();
 
   db.pool.query(
-    "INSERT INTO todos (text, created_on) VALUES ($1, $2) RETURNING id",
-    [text, createdOn],
+    "INSERT INTO todos (text, created_on, user_id) VALUES ($1, $2, $3) RETURNING id",
+    [text, createdOn, userId],
     (error, result) => {
       if (error) {
         throw error;
