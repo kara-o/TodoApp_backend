@@ -9,7 +9,6 @@ const getTodos = (req, res) => {
       if (error) {
         throw error;
       }
-      console.log("RESULT ROWS: ", results.rows);
       res.status(200).json(results.rows);
     }
   );
