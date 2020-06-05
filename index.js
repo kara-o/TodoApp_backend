@@ -2,6 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const port = process.env.PORT || 5000;
+const jwt = require("express-jwt");
+const jwks = require("jwks-rsa");
 const {
   getTodos,
   getTodoById,
@@ -18,7 +20,23 @@ app.use(
   })
 );
 
-//for each endpoint, set HTTP request method, endpoint URL path, and relevant function
+const jwtCheck = jwt({
+  secret: jwks.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: "https://reactapps.auth0.com/.well-known/jwks.json",
+  }),
+  audience: "http://localhost:5000/api",
+  issuer: "https://reactapps.auth0.com/",
+  algorithms: ["RS256"],
+});
+
+//do not need authorization
+app.post("/api/users", createUser);
+app.post("/api/users/login", loginUser);
+
+app.use(jwtCheck);
 
 //TODOS
 app.get("/api/todos", getTodos);
@@ -30,8 +48,6 @@ app.delete("/api/todos/:id", deleteTodo);
 //USERS
 app.get("/api/users", getUsers);
 app.get("/api/users/:id", getUserById);
-app.post("/api/users", createUser);
-app.post("/api/users/login", loginUser);
 
 //start server
 app.listen(port, () => {
